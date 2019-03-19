@@ -44,6 +44,25 @@ object List {
       }
     }
 
+  def dropWhile(ints:List[Int],f:(Int)=>Boolean):List[Int] = ints match {
+    case Cons(x,xs) => if(f(x)) dropWhile(xs,f) else xs
+    case Nil => Nil
+  }
+
+  def init(ints:List[Int]):List[Int] = ints match {
+    case Cons(_,Nil) => Nil
+    case Cons(x,xs) => Cons(x,init(xs))
+    case Nil => Nil
+  }
+
+  def foldRight(as:List[Int],z:Int)(f:(Int,Int)=>Int):Int = as match{
+    case Nil => z
+    case Cons(x,xs) => f(x,foldRight(xs,z)(f))
+  }
+
+  def sum1(ns:List[Int]):Int = foldRight(ns,0)(_+_)
+  def multiply(ns:List[Int]):Int = foldRight(ns,1)(_*_)
+
 
   def main(args: Array[String]): Unit = {
     val as = List (1,2,3,4,5,6)
@@ -60,8 +79,14 @@ object List {
 //    println(drop(as,3))
 
 
-    println(drop1(as,3))
-//
+//    println(drop1(as,3))
+
+//    println(dropWhile(as,x=>x<2))
+//    println(init(as))
+    println(sum1(as))
+    println(multiply(as))
+
+    //
 //    val x = List(1,2,3,4,5) match {
 //      case Cons(x,Cons(2, Cons(4,_))) => x
 //      case Nil => 42
