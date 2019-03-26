@@ -100,6 +100,12 @@ object List {
     case (_, Nil) => Nil
     case (Cons(a1,t),Cons(b1,y)) => Cons(b1 + b1, addTwoLists(t)(y))
   }
+
+  def zipWith(a:List[Int])(b:List[Int])(f:(Int,Int)=>Int):List[Int]  =  (a,b) match {
+    case (Nil, _) => Nil
+    case (_, Nil) => Nil
+    case (Cons(a1,t),Cons(b1,y)) => Cons(f(a1,b1), zipWith(t)(y)(f))
+  }
 //
 //  def add (l: List[Int]) (r: List[Int]): List[Int] = (l,r) match {
 //    case (Nil, _) => Nil
@@ -141,7 +147,9 @@ object List {
 //    println(convertListOfDoubleToString(as1))
 //    println(map(as1)(_+1))
 //    println(filter(as)(_>2))
-    println(addTwoLists(as)(as))
+//    println(addTwoLists(as)(as))
+
+    println(zipWith(as)(as)(_+_))
 //    println(append(as,as))
 //  println(flatmap(as)((a) =>List(a,a)))
     //
